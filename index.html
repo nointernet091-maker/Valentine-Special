@@ -68,8 +68,19 @@ button {
   color: white;
 }
 
+#yesBtn:hover {
+  transform: scale(1.1);
+}
+
 #noBtn {
   background: #ccc;
+}
+
+#response {
+  margin-top: 20px;
+  color: #ff0066;
+  font-weight: 600;
+  min-height: 24px;
 }
 
 .fullscreen {
@@ -99,7 +110,7 @@ button {
 
 <body>
 
-<div class="container" id="quizBox">
+<div class="container">
   <h1 id="question">First question 💖</h1>
   <div id="answers"></div>
 </div>
@@ -124,9 +135,9 @@ let currentQuestion = 0;
 let yesClickCount = 0;
 
 const playfulReplies = [
-  "Hmm… that click felt suspicious 😏",
-  "Are you sureeee? Try again 💭",
-  "That didn’t seem confident enough 👀"
+  "That click felt a little shy… try again 😌",
+  "Hmm… I need more confidence than that 💭",
+  "Are you absolutely certain? 👀"
 ];
 
 const questionEl = document.getElementById("question");
@@ -157,7 +168,7 @@ function showValentineQuestion() {
   answersEl.innerHTML = `
     <button id="yesBtn">Yes 💖</button>
     <button id="noBtn">No 🥺</button>
-    <div id="response" style="margin-top:20px;color:#ff0066;font-weight:600;"></div>
+    <div id="response"></div>
   `;
 
   const yesBtn = document.getElementById("yesBtn");
@@ -168,11 +179,13 @@ function showValentineQuestion() {
     if (yesClickCount < playfulReplies.length) {
       response.innerText = playfulReplies[yesClickCount];
       yesClickCount++;
+    } else {
+      showFinalScreen();
     }
   };
 
   noBtn.onclick = function() {
-    showFinalScreen();
+    response.innerText = "Hmm… that doesn’t seem right 😏";
   };
 }
 
