@@ -59,17 +59,9 @@ button {
   color: white;
 }
 
-.optionBtn:hover {
-  transform: scale(1.1);
-}
-
 #yesBtn {
   background: #ff0066;
   color: white;
-}
-
-#yesBtn:hover {
-  transform: scale(1.1);
 }
 
 #noBtn {
@@ -132,12 +124,22 @@ const questions = [
 ];
 
 let currentQuestion = 0;
+let noClickCount = 0;
 let yesClickCount = 0;
+let noSize = 1;
+let yesSize = 1;
 
-const playfulReplies = [
-  "That click felt a little shy… try again 😌",
-  "Hmm… I need more confidence than that 💭",
-  "Are you absolutely certain? 👀"
+const noReplies = [
+  "Are you absolutely sure? 🤨",
+  "Think carefully now… 😌",
+  "That doesn't feel right 👀"
+];
+
+const yesReplies = [
+  "Are you sure?? 😳",
+  "I'll give you unlimited hugs 🤗",
+  "Unlimited kisses? 😘",
+  "Will you be mine forever? 💖"
 ];
 
 const questionEl = document.getElementById("question");
@@ -176,8 +178,8 @@ function showValentineQuestion() {
   const response = document.getElementById("response");
 
   yesBtn.onclick = function() {
-    if (yesClickCount < playfulReplies.length) {
-      response.innerText = playfulReplies[yesClickCount];
+    if (yesClickCount < yesReplies.length) {
+      response.innerText = yesReplies[yesClickCount];
       yesClickCount++;
     } else {
       showFinalScreen();
@@ -185,14 +187,26 @@ function showValentineQuestion() {
   };
 
   noBtn.onclick = function() {
-    response.innerText = "Hmm… that doesn’t seem right 😏";
+    if (noClickCount < noReplies.length) {
+      response.innerText = noReplies[noClickCount];
+      noClickCount++;
+    } else {
+      response.innerText = "The no button is getting weaker… 😏";
+    }
+
+    noSize -= 0.15;
+    if (noSize < 0.2) noSize = 0.2;
+    noBtn.style.transform = `scale(${noSize})`;
+
+    yesSize += 0.15;
+    yesBtn.style.transform = `scale(${yesSize})`;
   };
 }
 
 function showFinalScreen() {
   document.body.innerHTML =
     "<div class='fullscreen'>" +
-    "Yeah, I knew you'd say yes. 💖<br><br>" +
+    "I knew you'd say yes 💖<br><br>" +
     "<span style='font-size:24px;font-family:Poppins;'>I love u Amar chutku mutku.</span>" +
     "</div>";
 }
